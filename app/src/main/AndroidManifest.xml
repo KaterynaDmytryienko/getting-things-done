@@ -13,13 +13,12 @@
         android:theme="@style/Theme.PDA_GTD"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name="com.kate.pda_gtd.pages.MainPage"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.PDA_GTD">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
