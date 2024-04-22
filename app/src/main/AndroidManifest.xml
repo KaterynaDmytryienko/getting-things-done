@@ -13,7 +13,7 @@
         android:theme="@style/Theme.PDA_GTD"
         tools:targetApi="31">
         <activity
-            android:name="com.kate.pda_gtd.pages.MainPage"
+            android:name="com.kate.pda_gtd.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.PDA_GTD">
@@ -22,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".pages.UserProfilePage" />
+        <activity android:name=".pages.TodayPage" />
+        <activity android:name=".pages.InboxPage" />
+        <activity android:name=".pages.TaskOverviewPage" />
+        <activity android:name=".pages.CalendarPage" />
+        <activity android:name=".pages.MainPage" />
     </application>
 
 </manifest>

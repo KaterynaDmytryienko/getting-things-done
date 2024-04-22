@@ -1,72 +1,75 @@
 package com.kate.pda_gtd.components
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.MailOutline
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kate.pda_gtd.ui.theme.Purple80
+
+data class NavPage(var name: String, var icon: ImageVector, var route: String)
+
+object Routes {
+    val TodayPage = NavPage("Today", Icons.Filled.List, "today")
+    val InboxPage = NavPage("Inbox", Icons.Filled.MailOutline, "inbox")
+    val TasksPage = NavPage("Tasks", Icons.Filled.Check, "tasks")
+    val CalendarPage = NavPage("Calendar", Icons.Filled.DateRange, "calendar")
+
+    val pages = listOf(TodayPage, InboxPage, TasksPage, CalendarPage)
+}
+
 
 
 class BottomNavigation {
-@Composable
-fun BottomAppBarExample() {
-    BottomAppBar(
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
 
-            val iconsWithLabels = arrayOf(
-                Icons.Filled.List to "Today",
-                Icons.Filled.MailOutline to "Inbox",
-                Icons.Filled.Check to "Tasks",
-                Icons.Filled.DateRange to "Calendar"
-            )
-
-
-            iconsWithLabels.forEach { (icon, label) ->
-                IconButton(
-                    onClick = { /* Handle click here */ },
-
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        Icon(
-                            icon,
-                            contentDescription = label,
-                            modifier = Modifier.size(24.dp)
-                        )
-                        Text(
-                            text = label,
-                            fontSize = 12.sp
-                        )
-                    }
-                }
+    @Composable
+    fun NavBar(selectedRoute : String = "",
+               onChange: (String)->Unit
+               ){
+        Row (horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth().padding(10.dp)){
+            for(page in Routes.pages){
+              NavBarItem(page, selected = selectedRoute == page.route,
+                  modifier = Modifier.clickable {
+                      onChange(page.route)
+                  }
+              )
             }
         }
     }
-}
+    @Composable
+    fun NavBarItem(page : NavPage, selected : Boolean = false, modifier: Modifier = Modifier) {
+       Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier.padding(horizontal = 12.dp)){
+           Image(
+
+               imageVector = page.icon,
+               contentDescription = page.name,
+               colorFilter = ColorFilter.tint(
+                   if(selected) Purple80 else Color.Black
+               ),
+               modifier = Modifier
+                   .size(24.dp)
+           )
+           Text(page.name,
+               fontSize = 12.sp,
+               color = if(selected) Purple80 else Color.Black)
+       }
+    }
 }
 

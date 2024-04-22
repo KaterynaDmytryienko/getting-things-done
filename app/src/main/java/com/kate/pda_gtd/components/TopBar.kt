@@ -1,5 +1,6 @@
 package com.kate.pda_gtd.components
 
+import android.content.Intent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Menu
@@ -12,12 +13,14 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.NavHostController
+import androidx.activity.ComponentActivity
 
-class TopBar {
+import com.kate.pda_gtd.pages.UserProfilePage
+
+class TopBar : ComponentActivity(){
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun AppBarExample(navController: NavHostController) {
+    fun AppBarExample() {
         CenterAlignedTopAppBar(
             title = { Text("", color = Color.White) },
             navigationIcon = {
@@ -26,8 +29,11 @@ class TopBar {
                 }
             },
             actions = {
-                IconButton(onClick = { /* Handle search icon click */ }) {
-                    Icon(Icons.Filled.AccountCircle, "Search", tint = Color.Black)
+                IconButton(onClick = {
+                    val navigate = Intent(this@TopBar, UserProfilePage::class.java)
+                    startActivity(navigate)
+                }) {
+                    Icon(Icons.Filled.AccountCircle, "UserProfile", tint = Color.Black)
                 }
             },
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
