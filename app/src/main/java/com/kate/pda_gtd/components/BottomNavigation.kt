@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.List
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kate.pda_gtd.pages.UserProfilePage
 import com.kate.pda_gtd.ui.theme.Purple80
 
 data class NavPage(var name: String, var icon: ImageVector, var route: String)
@@ -31,6 +33,7 @@ object Routes {
     val InboxPage = NavPage("Inbox", Icons.Filled.MailOutline, "inbox")
     val TasksPage = NavPage("Tasks", Icons.Filled.Check, "tasks")
     val CalendarPage = NavPage("Calendar", Icons.Filled.DateRange, "calendar")
+    val UserProfilePage = NavPage("UserProfile", Icons.Filled.AccountCircle, "userprofile")
 
     val pages = listOf(TodayPage, InboxPage, TasksPage, CalendarPage)
 }

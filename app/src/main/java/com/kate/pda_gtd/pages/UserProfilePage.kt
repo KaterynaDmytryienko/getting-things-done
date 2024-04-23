@@ -1,5 +1,7 @@
 package com.kate.pda_gtd.pages
+import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +20,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.kate.pda_gtd.R
 class UserProfilePage : ComponentActivity() {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            UserProfileContent()
+        }
+    }
     @Composable
     fun UserProfileContent() {
         Column(
