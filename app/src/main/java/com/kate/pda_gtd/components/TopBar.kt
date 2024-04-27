@@ -14,11 +14,11 @@ import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(onUserProfileClick: () -> Unit) {
+fun TopBar(onUserProfileClick: () -> Unit, onNavigationIconClick: () -> Unit) {
     CenterAlignedTopAppBar(
         title = { Text("", color = Color.White) },
         navigationIcon = {
-            IconButton(onClick = { /* Handle navigation icon click */ }) {
+            IconButton(onClick = onNavigationIconClick) {
                 Icon(Icons.Filled.Menu, "Menu", tint = Color.Gray)
             }
         },

@@ -28,6 +28,7 @@
         <activity android:name=".pages.TaskOverviewPage" />
         <activity android:name=".pages.CalendarPage" />
         <activity android:name=".pages.MainPage" />
+        <activity android:name=".pages.CreateTaskConclusionPage" />
     </application>
 
 </manifest>

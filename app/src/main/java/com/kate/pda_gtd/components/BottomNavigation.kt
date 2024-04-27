@@ -12,8 +12,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.MailOutline
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,6 +36,9 @@ object Routes {
     val TasksPage = NavPage("Tasks", Icons.Filled.Check, "tasks")
     val CalendarPage = NavPage("Calendar", Icons.Filled.DateRange, "calendar")
     val UserProfilePage = NavPage("UserProfile", Icons.Filled.AccountCircle, "userprofile")
+    val MainPage = NavPage("MainPage", Icons.Filled.AccountCircle, "mainpage")
+    val SettingsPage = NavPage("SettingsPage", Icons.Filled.Settings, "settingspage")
+    val AboutPage = NavPage("AboutPage", Icons.Filled.Info, "aboutpage")
 
     val pages = listOf(TodayPage, InboxPage, TasksPage, CalendarPage)
 }
