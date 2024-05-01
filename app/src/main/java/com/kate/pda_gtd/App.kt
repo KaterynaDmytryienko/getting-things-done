@@ -131,7 +131,7 @@ fun App() {
                         Routes.TodayPage.route -> TodayPage().TodayPageContent()
                         Routes.InboxPage.route -> InboxPage().InboxPageContent()
                         Routes.TasksPage.route -> TaskOverviewPage().TasksPageContent()
-                        Routes.CalendarPage.route -> CalendarPage()
+                        Routes.CalendarPage.route -> CalendarPage().Calendar()
                         Routes.UserProfilePage.route -> UserProfilePage().UserProfileContent()
                         Routes.SettingsPage.route -> SettingsPage().SettingsPageContent()
                         Routes.AboutPage.route -> AboutPage().AboutPageContent()

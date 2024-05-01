@@ -15,20 +15,23 @@ import androidx.compose.material3.ListItem
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.kate.pda_gtd.components.TaskDialogClass
 
 
 class TodayPage: ComponentActivity() {
     @Preview
     @Composable
     fun TodayPageContent() {
-        val context = LocalContext.current;
+        var showDialog by remember { mutableStateOf(false) }
         Column(Modifier.padding(top = 70.dp, bottom = 30.dp)) {
             ListItem(
                 headlineContent = { Text("Congratulate Mom") },
@@ -65,12 +68,17 @@ class TodayPage: ComponentActivity() {
 
 
         }
-        Column(Modifier.padding(top = 400.dp, bottom = 30.dp, start = 300.dp)) {
+        Column(Modifier.padding(top = 650.dp, bottom = 30.dp, start = 300.dp)) {
             FloatingActionButton(
-                onClick = { val navigate = Intent(context, CreateTaskConclusionPage::class.java)
-                    startActivity(navigate)},
+
+                onClick = {
+                    showDialog = true
+                },
             ) {
                 Icon(Icons.Filled.Add, "Floating action button.")
+            }
+            if (showDialog) {
+                TaskDialogClass().TaskDialog(onDismiss = { showDialog = false })
             }
         }
 
