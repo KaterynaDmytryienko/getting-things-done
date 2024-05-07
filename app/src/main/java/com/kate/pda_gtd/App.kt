@@ -1,9 +1,10 @@
 package com.kate.pda_gtd
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -11,7 +12,6 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalDrawerSheet
@@ -38,15 +38,20 @@ import androidx.compose.ui.unit.dp
 import com.kate.pda_gtd.components.BottomNavigation
 import com.kate.pda_gtd.components.Routes
 import com.kate.pda_gtd.components.TopBar
+import com.kate.pda_gtd.data.CategoryEvent
+import com.kate.pda_gtd.data.CategoryState
+import com.kate.pda_gtd.data.TaskEvent
+import com.kate.pda_gtd.data.TaskState
+import com.kate.pda_gtd.data.TaskViewModel
 import com.kate.pda_gtd.pages.AboutPage
 import com.kate.pda_gtd.pages.CalendarPage
+import com.kate.pda_gtd.pages.CategoryPage
 import com.kate.pda_gtd.pages.InboxPage
 import com.kate.pda_gtd.pages.MainPage
 import com.kate.pda_gtd.pages.SettingsPage
 import com.kate.pda_gtd.pages.TaskOverviewPage
 import com.kate.pda_gtd.pages.TodayPage
 import com.kate.pda_gtd.pages.UserProfilePage
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 data class NavigationItem(
@@ -55,19 +60,19 @@ data class NavigationItem(
     val unselectedIcon : ImageVector
 )
 
+
+
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun App() {
+fun App(state: TaskState, cstate: CategoryState, viewModel: TaskViewModel) {
     val selectedRoute = remember { mutableStateOf("") }
-
     val context = LocalContext.current
-
     val scope = rememberCoroutineScope()
 
     var selectedItemIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
-
     val items = listOf(
         NavigationItem(
             title = "About",
@@ -82,9 +87,9 @@ fun App() {
     )
 
     Surface(modifier = Modifier.fillMaxSize()) {
+
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
         ModalNavigationDrawer(drawerContent = {
-            //actual drawer items
             ModalDrawerSheet {
                 Spacer(modifier = Modifier.height(16.dp))
                 items.forEachIndexed{index, item ->
@@ -127,14 +132,18 @@ fun App() {
                     )
                 },
                 content = {
-                    when (selectedRoute.value) {
-                        Routes.TodayPage.route -> TodayPage().TodayPageContent()
-                        Routes.InboxPage.route -> InboxPage().InboxPageContent()
-                        Routes.TasksPage.route -> TaskOverviewPage().TasksPageContent()
-                        Routes.CalendarPage.route -> CalendarPage().Calendar()
-                        Routes.UserProfilePage.route -> UserProfilePage().UserProfileContent()
-                        Routes.SettingsPage.route -> SettingsPage().SettingsPageContent()
-                        Routes.AboutPage.route -> AboutPage().AboutPageContent()
+                    when {
+                       selectedRoute.value ==  Routes.TodayPage.route -> TodayPage().TodayPageContent(state)
+                        selectedRoute.value == Routes.InboxPage.route -> InboxPage().InboxPageContent()
+                        selectedRoute.value ==  Routes.TasksPage.route -> TaskOverviewPage().TasksPageContent(cstate, state, selectedRoute)
+                        selectedRoute.value == Routes.CalendarPage.route -> CalendarPage().Calendar()
+                        selectedRoute.value == Routes.UserProfilePage.route -> UserProfilePage().UserProfileContent()
+                        selectedRoute.value == Routes.SettingsPage.route -> SettingsPage().SettingsPageContent()
+                        selectedRoute.value ==  Routes.AboutPage.route -> AboutPage().AboutPageContent()
+                        selectedRoute.value.startsWith(Routes.CategoryPage.route) -> {
+                            val categoryName = selectedRoute.value.substringAfterLast("/")
+                            CategoryPage().CategoryPageContent(viewModel, categoryName)
+                        }
                         else ->
                             MainPage().MainContent()
                     }

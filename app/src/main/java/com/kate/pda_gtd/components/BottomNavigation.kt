@@ -39,7 +39,7 @@ object Routes {
     val MainPage = NavPage("MainPage", Icons.Filled.AccountCircle, "mainpage")
     val SettingsPage = NavPage("SettingsPage", Icons.Filled.Settings, "settingspage")
     val AboutPage = NavPage("AboutPage", Icons.Filled.Info, "aboutpage")
-
+    val CategoryPage = NavPage("CategoryPage", Icons.Filled.Info, "categorypage")
     val pages = listOf(TodayPage, InboxPage, TasksPage, CalendarPage)
 }
 
