@@ -5,6 +5,8 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+
+
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -57,64 +59,69 @@ class TaskOverviewPage {
         val categoryViewModel: CategoryViewModel = viewModel()
         val taskViewModel: TaskViewModel = viewModel()
         var selectedCategory by remember { mutableStateOf<Category?>(null) }
+Column {
 
-        Column(modifier = Modifier.padding(bottom = 80.dp)) {
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                items(state.categories) { category ->
-                    ElevatedCard(
-                        elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
-                        modifier = Modifier
-                            .height(80.dp)
-                            .fillMaxWidth()
-                            .padding(bottom = 10.dp)
-                            .clickable {
-                                selectedCategory = category
-                                selectedRoute.value = "categorypage/${category.name}"
-                            }
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Start,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(16.dp)
-                        ) {
+    LazyColumn(  modifier = Modifier
+        .padding(top = 56.dp)
+        .weight(1f).fillMaxWidth()) {
+        items(state.categories) { category ->
+            ElevatedCard(
+                elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
+                modifier = Modifier
+                    .height(80.dp)
+                    .fillMaxWidth()
+                    .padding(3.dp)
+                    .clickable {
+                        selectedCategory = category
+                        selectedRoute.value = "categorypage/${category.name}"
+                    }
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.FavoriteBorder,
+                        contentDescription = category.name,
+                        tint = Color(0xFF6200EE),
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(
+                        text = category.name,
+                        color = Color.Black,
+                        fontSize = 18.sp,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(Modifier.weight(1f))
+                    IconButton(
+                        onClick = {
+                            categoryViewModel.onEvent(CategoryEvent.DeleteCategoryById(category.id))
+                            taskViewModel.onEvent(TaskEvent.DeleteAllTasksFromCategory(category.name))
+                        },
+                        content = {
                             Icon(
-                                imageVector = Icons.Filled.FavoriteBorder,
-                                contentDescription = category.name,
-                                tint = Color(0xFF6200EE),
-                            )
-                            Spacer(modifier = Modifier.width(16.dp))
-                            Text(
-                                text = category.name,
-                                color = Color.Black,
-                                fontSize = 18.sp,
-                                textAlign = TextAlign.Center
-                            )
-                            Spacer(Modifier.weight(1f))
-                            IconButton(
-                                onClick = {
-                                    categoryViewModel.onEvent(CategoryEvent.DeleteCategoryById(category.id))
-                                        taskViewModel.onEvent(TaskEvent.DeleteAllTasksFromCategory(category.name))
-                                },
-                                content = {
-                                    Icon(
-                                        imageVector = Icons.Outlined.Delete,
-                                        contentDescription = "Delete ${category.name}",
-                                        tint = Color.Black
-                                    )
-                                }
+                                imageVector = Icons.Outlined.Delete,
+                                contentDescription = "Delete ${category.name}",
+                                tint = Color.Black
                             )
                         }
-                    }
+                    )
                 }
             }
 
-            if (showCategoryDialog) {
-                CategoryCreationDialog().CategoryDialog(onDismiss = { showCategoryDialog = false }, onEvent = { event -> categoryViewModel.onEvent(event) })
-            }
+
         }
-        Column(Modifier.padding(top = 750.dp, bottom = 30.dp, start = 340.dp)) {
+
+
+    }
+    if (showCategoryDialog) {
+        CategoryCreationDialog().CategoryDialog(onDismiss = { showCategoryDialog = false }, onEvent = { event -> categoryViewModel.onEvent(event) })
+    }
+}
+        Column(Modifier.padding(top = 650.dp, bottom = 30.dp, start = 300.dp)) {
             FloatingActionButton(onClick = { showCategoryDialog = true }) {
                 Icon(Icons.Filled.Add, contentDescription = "Add Category")
             }

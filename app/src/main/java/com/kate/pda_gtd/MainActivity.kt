@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.kate.pda_gtd.data.CategoryViewModel
 import com.kate.pda_gtd.data.GTD_Database
 import com.kate.pda_gtd.data.TaskViewModel
+import com.kate.pda_gtd.data.UserViewModel
 import com.kate.pda_gtd.ui.theme.PDA_GTDTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,18 +48,32 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private val userViewModel by viewModels<UserViewModel> {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                if (modelClass.isAssignableFrom(UserViewModel::class.java)) {
+                    @Suppress("UNCHECKED_CAST")
+                    return UserViewModel() as T
+                } else {
+                    throw IllegalArgumentException("Unknown ViewModel class")
+                }
+            }
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val taskState = taskViewModel.state.collectAsState()
             val categoryState = categoryViewModel.state.collectAsState()
+            val userState = userViewModel.state.collectAsState()
             PDA_GTDTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    App(taskState.value, categoryState.value, taskViewModel)
+                    App(taskState.value, categoryState.value, taskViewModel, userState.value, userViewModel )
                 }
             }
         }

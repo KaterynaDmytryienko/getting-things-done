@@ -59,36 +59,36 @@ fun TaskDialog(onDismiss: () -> Unit, onEvent: (TaskEvent)->Unit, categoryViewMo
     var showTimePicker by remember { mutableStateOf(false) }
     var selectedTime by remember { mutableStateOf("") }
 
+    val service = NotificationService(context)
+
     val categories by categoryViewModel.categories.collectAsState()
   if (pageName == "today") {
         selectedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("d/M/yyyy"))
       onEvent(TaskEvent.SetDueDate(selectedDate))
     }
     if (showDatePicker && selectedDate.isEmpty()) {
+        showDatePicker = false
         datePickerDialog.showDatePicker(
             context = context,
             onDateSelected = { date ->
-                    date.format(DateTimeFormatter.ofPattern("d/M/yyyy"))
+                    selectedDate = date.format(DateTimeFormatter.ofPattern("d/M/yyyy"))
                 onEvent(TaskEvent.SetDueDate(selectedDate))
-                showDatePicker = false
             },
             onDismiss = {
-                showDatePicker = false
                 onDismiss()
             }
         )
     }
 
     if (showTimePicker) {
+        showTimePicker = false
         timePickerDialog.showTimePicker(
             context = context,
             onTimeSelected = { time ->
                 selectedTime = time
-                showTimePicker = false
                 onEvent(TaskEvent.SetNotificationTime(selectedTime))
             },
             onDismiss = {
-                showTimePicker = false
                 onDismiss()
             }
         )
@@ -180,6 +180,16 @@ fun TaskDialog(onDismiss: () -> Unit, onEvent: (TaskEvent)->Unit, categoryViewMo
                         Text("Cancel")
                     }
                     TextButton(onClick = {
+                        if (selectedDate.isNotEmpty()) {
+                            if (selectedTime.isNotEmpty()) {
+                                service.scheduleNotification(
+                                    context,
+                                    taskName,
+                                    selectedDate,
+                                    selectedTime
+                                )
+                            }
+                        }
                         onEvent(TaskEvent.SaveTask(taskName, taskDescription, selectedCategory, selectedDate, selectedTime, false ))
                         onDismiss()
                     }) {

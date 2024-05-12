@@ -49,8 +49,8 @@ class TodayPage: ComponentActivity() {
         val categoryViewModel : CategoryViewModel = viewModel()
         var showDialog by remember { mutableStateOf(false) }
 
-        LazyColumn {
-            items(state.tasks) { task ->
+        LazyColumn (Modifier.padding(top = 56.dp)){
+            items(taskViewModel.state.value.tasks) { task ->
                 if(task.dueDate == formatDate(LocalDateTime.now())){
                     ListItem(
                         headlineContent = { Text(task.name) },

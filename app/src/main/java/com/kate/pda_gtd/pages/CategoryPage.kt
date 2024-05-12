@@ -54,7 +54,7 @@ class CategoryPage : ComponentActivity() {
         if (tasksInCategory.isEmpty()) {
             Text("No tasks in this category", style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(100.dp))
         } else {
-            LazyColumn {
+            LazyColumn(Modifier.padding(top = 56.dp)) {
                 items(tasksInCategory) { task ->
                     ListItem(
                         headlineContent = { Text(task.name) },
@@ -68,7 +68,9 @@ class CategoryPage : ComponentActivity() {
                         }
                     )
                 }
+
             }
+
         }
 
         Column(Modifier.padding(top = 650.dp, bottom = 30.dp, start = 300.dp)) {

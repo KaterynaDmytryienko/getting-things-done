@@ -43,6 +43,8 @@ import com.kate.pda_gtd.data.CategoryState
 import com.kate.pda_gtd.data.TaskEvent
 import com.kate.pda_gtd.data.TaskState
 import com.kate.pda_gtd.data.TaskViewModel
+import com.kate.pda_gtd.data.UserState
+import com.kate.pda_gtd.data.UserViewModel
 import com.kate.pda_gtd.pages.AboutPage
 import com.kate.pda_gtd.pages.CalendarPage
 import com.kate.pda_gtd.pages.CategoryPage
@@ -65,7 +67,7 @@ data class NavigationItem(
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun App(state: TaskState, cstate: CategoryState, viewModel: TaskViewModel) {
+fun App(state: TaskState, cstate: CategoryState, viewModel: TaskViewModel, userState: UserState, userViewModel: UserViewModel) {
     val selectedRoute = remember { mutableStateOf("") }
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -134,11 +136,11 @@ fun App(state: TaskState, cstate: CategoryState, viewModel: TaskViewModel) {
                 content = {
                     when {
                        selectedRoute.value ==  Routes.TodayPage.route -> TodayPage().TodayPageContent(state)
-                        selectedRoute.value == Routes.InboxPage.route -> InboxPage().InboxPageContent()
+                        selectedRoute.value == Routes.InboxPage.route -> InboxPage().InboxPageContent(state, context)
                         selectedRoute.value ==  Routes.TasksPage.route -> TaskOverviewPage().TasksPageContent(cstate, state, selectedRoute)
                         selectedRoute.value == Routes.CalendarPage.route -> CalendarPage().Calendar()
-                        selectedRoute.value == Routes.UserProfilePage.route -> UserProfilePage().UserProfileContent()
-                        selectedRoute.value == Routes.SettingsPage.route -> SettingsPage().SettingsPageContent()
+                        selectedRoute.value == Routes.UserProfilePage.route -> UserProfilePage().UserProfileContent(userState, userViewModel)
+                        selectedRoute.value == Routes.SettingsPage.route -> SettingsPage().SettingsPageContent(context)
                         selectedRoute.value ==  Routes.AboutPage.route -> AboutPage().AboutPageContent()
                         selectedRoute.value.startsWith(Routes.CategoryPage.route) -> {
                             val categoryName = selectedRoute.value.substringAfterLast("/")
