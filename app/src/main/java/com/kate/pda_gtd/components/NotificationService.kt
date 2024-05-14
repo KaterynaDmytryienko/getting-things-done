@@ -39,7 +39,7 @@ class NotificationService (private val context:Context){
         val notificationBuilder = NotificationCompat.Builder(context, NOTIFICATION_ID)
             .setSmallIcon(R.drawable.ic_logo)
             .setContentTitle("Task deadline")
-            .setContentText("Deadline $s")
+            .setContentText("$s")
             .setContentIntent(activityPendingIntent)
             .setAutoCancel(true)
 
