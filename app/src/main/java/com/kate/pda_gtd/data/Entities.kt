@@ -20,5 +20,5 @@ data class Task(
     val description: String,
     val category: String,
     val notificationTime: String,
-    val isCompleted: Boolean
+    val isCompleted: Boolean,
 )

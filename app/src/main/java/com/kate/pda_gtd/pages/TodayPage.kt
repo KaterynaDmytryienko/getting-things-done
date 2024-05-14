@@ -1,7 +1,7 @@
 package com.kate.pda_gtd.pages
 
+import android.annotation.SuppressLint
 import android.os.Build
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 
@@ -16,6 +16,7 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,6 +42,7 @@ class TodayPage: ComponentActivity() {
         val formatter = DateTimeFormatter.ofPattern("d/M/yyyy")
         return date.format(formatter)
     }
+    @SuppressLint("StateFlowValueCalledInComposition")
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun TodayPageContent(state: TaskState) {
@@ -49,6 +51,10 @@ class TodayPage: ComponentActivity() {
         val categoryViewModel : CategoryViewModel = viewModel()
         var showDialog by remember { mutableStateOf(false) }
 
+        val tasksInTodayPage = taskViewModel.state.value.tasks
+        if(tasksInTodayPage.isEmpty()){
+            Text("No tasks here yet", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(100.dp, 100.dp))
+        }
         LazyColumn (Modifier.padding(top = 56.dp)){
             items(taskViewModel.state.value.tasks) { task ->
                 if(task.dueDate == formatDate(LocalDateTime.now())){
@@ -73,7 +79,7 @@ class TodayPage: ComponentActivity() {
   }
 
         if (showDialog) {
-            TaskDialogClass().TaskDialog(onDismiss = { showDialog = false }, onEvent = { event -> taskViewModel.onEvent(event)}, categoryViewModel = categoryViewModel, pageName = "today")
+            TaskDialogClass().TaskDialog(onDismiss = { showDialog = false }, onEvent = { event -> taskViewModel.onEvent(event)}, categoryViewModel = categoryViewModel, pageName = "today", dateSelected = "")
         }
     }
 }

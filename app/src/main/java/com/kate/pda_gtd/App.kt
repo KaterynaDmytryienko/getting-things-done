@@ -34,13 +34,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-
 import com.kate.pda_gtd.components.BottomNavigation
 import com.kate.pda_gtd.components.Routes
 import com.kate.pda_gtd.components.TopBar
-import com.kate.pda_gtd.data.CategoryEvent
 import com.kate.pda_gtd.data.CategoryState
-import com.kate.pda_gtd.data.TaskEvent
 import com.kate.pda_gtd.data.TaskState
 import com.kate.pda_gtd.data.TaskViewModel
 import com.kate.pda_gtd.data.UserState
@@ -140,7 +137,7 @@ fun App(state: TaskState, cstate: CategoryState, viewModel: TaskViewModel, userS
                         selectedRoute.value ==  Routes.TasksPage.route -> TaskOverviewPage().TasksPageContent(cstate, state, selectedRoute)
                         selectedRoute.value == Routes.CalendarPage.route -> CalendarPage().Calendar()
                         selectedRoute.value == Routes.UserProfilePage.route -> UserProfilePage().UserProfileContent(userState, userViewModel)
-                        selectedRoute.value == Routes.SettingsPage.route -> SettingsPage().SettingsPageContent(context)
+                        selectedRoute.value == Routes.SettingsPage.route -> SettingsPage().SettingsPageContent()
                         selectedRoute.value ==  Routes.AboutPage.route -> AboutPage().AboutPageContent()
                         selectedRoute.value.startsWith(Routes.CategoryPage.route) -> {
                             val categoryName = selectedRoute.value.substringAfterLast("/")

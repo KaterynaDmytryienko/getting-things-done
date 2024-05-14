@@ -11,6 +11,5 @@ data class TaskState(
     val notificationTime: MutableState<String> = mutableStateOf(""),
     val dueDate: MutableState<String> = mutableStateOf(""),
     val isAddingTask : Boolean = false,
-    val isCompleted : Boolean = false
-
+    val isCompleted : Boolean = false,
 )

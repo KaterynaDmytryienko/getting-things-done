@@ -52,7 +52,7 @@ class CategoryPage : ComponentActivity() {
             it.category.equals(categoryName, ignoreCase = true)
         }
         if (tasksInCategory.isEmpty()) {
-            Text("No tasks in this category", style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(100.dp))
+            Text("No tasks in this category", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(100.dp, 100.dp))
         } else {
             LazyColumn(Modifier.padding(top = 56.dp)) {
                 items(tasksInCategory) { task ->
@@ -84,7 +84,8 @@ class CategoryPage : ComponentActivity() {
                 onDismiss = { showDialog = false },
                 onEvent = { event -> taskViewModel.onEvent(event) },
                 categoryViewModel = categoryViewModel,
-                pageName = "category/$categoryName"
+                pageName = "category/$categoryName",
+                dateSelected = ""
             )
         }
     }

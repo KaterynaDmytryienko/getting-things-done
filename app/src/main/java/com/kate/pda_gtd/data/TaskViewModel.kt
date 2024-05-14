@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 
 class TaskViewModel(
     private val taskDao: TaskDao,
@@ -49,13 +48,13 @@ class TaskViewModel(
                         category = currentState.category.value,
                         dueDate =  currentState.dueDate.value,
                         notificationTime = currentState.notificationTime.value,
-                        isCompleted = currentState.isCompleted
+                        isCompleted = currentState.isCompleted,
                     )
                     viewModelScope.launch {
                         try {
                             taskDao.insertTask(newTask)
                         } catch (e: Exception) {
-                            Log.e("TaskViewModelERRRRRRRRR", "Error inserting task", e)
+                            Log.e("TaskViewModel", "Error inserting task", e)
                         }
                         _state.update { it.copy(name = mutableStateOf(""), description = mutableStateOf(""), category = mutableStateOf(""), dueDate = mutableStateOf(""), notificationTime = mutableStateOf(""), isAddingTask = false) }
                     }
@@ -66,10 +65,7 @@ class TaskViewModel(
             is TaskEvent.SetCategory -> _state.update { it.copy(category = mutableStateOf(event.category)) }
             is TaskEvent.SetNotificationTime -> _state.update { it.copy(notificationTime  = mutableStateOf(event.time)) }
 
-            is TaskEvent.SetExistingInDb -> TODO()
-            is TaskEvent.SetTaskId -> TODO()
             TaskEvent.ShowDialog -> TODO()
-            TaskEvent.UpdateTask -> TODO()
             is TaskEvent.SetDueDate ->
                 _state.update { it.copy(dueDate  = mutableStateOf(event.dueDate)) }
 

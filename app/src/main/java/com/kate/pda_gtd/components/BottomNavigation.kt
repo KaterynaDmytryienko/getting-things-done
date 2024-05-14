@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.kate.pda_gtd.pages.UserProfilePage
 import com.kate.pda_gtd.ui.theme.Purple80
 
 data class NavPage(var name: String, var icon: ImageVector, var route: String)

@@ -1,7 +1,5 @@
 package com.kate.pda_gtd.pages
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,16 +16,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -59,6 +55,11 @@ class TaskOverviewPage {
         val categoryViewModel: CategoryViewModel = viewModel()
         val taskViewModel: TaskViewModel = viewModel()
         var selectedCategory by remember { mutableStateOf<Category?>(null) }
+        val categories = state.categories
+
+        if(categories.isEmpty()){
+            Text("No categories here yet", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(100.dp, 100.dp))
+        }
 Column {
 
     LazyColumn(  modifier = Modifier

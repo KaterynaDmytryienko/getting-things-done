@@ -19,10 +19,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.kate.pda_gtd.data.CategoryDao
-import com.kate.pda_gtd.data.CategoryDao_Impl
 import com.kate.pda_gtd.data.CategoryEvent
-import com.kate.pda_gtd.data.TaskEvent
+
 
 class CategoryCreationDialog {
 @Composable

@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,6 +27,10 @@ class InboxPage() {
         val formatter = DateTimeFormatter.ofPattern("d/M/yyyy")
         val today = LocalDate.now()
 
+        val messagesInInbox = state.tasks
+        if(messagesInInbox.isEmpty()){
+            Text("No upcoming deadlines", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(100.dp, 100.dp))
+        }
         LazyColumn(Modifier.padding(top = 56.dp)) {
             items(state.tasks) { task ->
                     val taskDate = LocalDate.parse(task.dueDate, formatter)
