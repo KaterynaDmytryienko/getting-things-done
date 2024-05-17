@@ -23,7 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kate.pda_gtd.R
+import com.kate.pda_gtd.ui.theme.Pink80
 import com.kate.pda_gtd.ui.theme.Purple80
+import com.kate.pda_gtd.ui.theme.PurpleGrey40
 
 class AboutPage {
     @Composable

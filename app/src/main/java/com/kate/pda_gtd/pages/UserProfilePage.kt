@@ -11,6 +11,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
@@ -77,6 +79,15 @@ class UserProfilePage : ComponentActivity() {
                 hasCameraPermission = isGranted
             }
         )
+
+        val galleryLauncher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetContent(),
+            onResult = { uri: Uri? ->
+                uri?.let {
+                    photoUri = it
+                }
+            }
+        )
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -108,22 +119,38 @@ class UserProfilePage : ComponentActivity() {
                 UserCheckMarkGraphic()
             }
             viewModel.onEvent(UserEvent.SetPhoto(photoUri.toString()))
-            Button(
-                onClick = {
-                    if (!hasCameraPermission) {
-                        permissionLauncher.launch(Manifest.permission.CAMERA)
-                    } else {
-                        showCamera = true
-                    }
-                },
-                modifier = Modifier
-                    .height(58.dp)
-                    .width(204.dp),
-                shape = RoundedCornerShape(30.dp),
+            Row (horizontalArrangement = Arrangement.SpaceEvenly){
+                Button(
+                    onClick = {
+                        if (!hasCameraPermission) {
+                            permissionLauncher.launch(Manifest.permission.CAMERA)
+                        } else {
+                            showCamera = true
+                        }
+                    },
+                    modifier = Modifier
+                        .height(58.dp)
+                        .width(150.dp),
+                    shape = RoundedCornerShape(30.dp),
 
+                    ) {
+                    Text("Camera", color = Color.White)
+                }
+                
+                Spacer(modifier = Modifier.width(30.dp))
+                Button(
+                    onClick = {
+                        galleryLauncher.launch("image/*")
+
+                    }, modifier = Modifier
+                        .height(58.dp)
+                        .width(150.dp),
+                    shape = RoundedCornerShape(30.dp)
                 ) {
-                Text("Change profile picture", color = Color.White)
+                    Text("Gallery", color = Color.White)
+                }
             }
+
         }
     }
 

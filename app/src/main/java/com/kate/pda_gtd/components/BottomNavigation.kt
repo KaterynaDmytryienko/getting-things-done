@@ -30,9 +30,9 @@ import com.kate.pda_gtd.ui.theme.Purple80
 data class NavPage(var name: String, var icon: ImageVector, var route: String)
 
 object Routes {
-    val TodayPage = NavPage("Today", Icons.Filled.List, "today")
+    val TodayPage = NavPage("Today", Icons.Filled.Check, "today")
     val InboxPage = NavPage("Inbox", Icons.Filled.MailOutline, "inbox")
-    val TasksPage = NavPage("Tasks", Icons.Filled.Check, "tasks")
+    val TasksPage = NavPage("Categories", Icons.Filled.List, "tasks")
     val CalendarPage = NavPage("Calendar", Icons.Filled.DateRange, "calendar")
     val UserProfilePage = NavPage("UserProfile", Icons.Filled.AccountCircle, "userprofile")
     val MainPage = NavPage("MainPage", Icons.Filled.AccountCircle, "mainpage")
