@@ -65,7 +65,6 @@ class TaskViewModel(
             is TaskEvent.SetCategory -> _state.update { it.copy(category = mutableStateOf(event.category)) }
             is TaskEvent.SetNotificationTime -> _state.update { it.copy(notificationTime  = mutableStateOf(event.time)) }
 
-            TaskEvent.ShowDialog -> TODO()
             is TaskEvent.SetDueDate ->
                 _state.update { it.copy(dueDate  = mutableStateOf(event.dueDate)) }
 

@@ -9,7 +9,6 @@ sealed interface TaskEvent {
         val selectedDate : String,
         val isCompleted : Boolean,
     ): TaskEvent
-    object ShowDialog : TaskEvent
     data class SetTaskName(val name: String): TaskEvent
     data class SetTaskDescription(val description: String): TaskEvent
     data class SetNotificationTime(val time : String): TaskEvent
