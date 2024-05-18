@@ -68,7 +68,7 @@ class TaskOverviewPage : ComponentActivity(){
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(100.dp, 100.dp)
             )
-        } else {
+        }
             Column {
 
                 LazyColumn(
@@ -151,4 +151,3 @@ class TaskOverviewPage : ComponentActivity(){
             }
         }
     }
-}

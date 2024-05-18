@@ -52,9 +52,13 @@ class CategoryPage : ComponentActivity() {
             it.category.equals(categoryName, ignoreCase = true)
         }
         if (tasksInCategory.isEmpty()) {
-            Text("No tasks in this category", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(100.dp, 100.dp))
-        } else {
-            LazyColumn(Modifier.padding(top = 56.dp)) {
+            Text(
+                "No tasks in this category",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(100.dp, 100.dp)
+            )
+        }
+        LazyColumn(Modifier.padding(top = 56.dp)) {
                 items(tasksInCategory) { task ->
                     ListItem(
                         headlineContent = { Text(task.name) },
@@ -69,16 +73,12 @@ class CategoryPage : ComponentActivity() {
                     )
                 }
 
-            }
-
         }
-
         Column(Modifier.padding(top = 650.dp, bottom = 30.dp, start = 300.dp)) {
             FloatingActionButton(onClick = { showDialog = true }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add Task")
+                Icon(Icons.Filled.Add, contentDescription = "Add Category")
             }
         }
-
         if (showDialog) {
             TaskDialogClass().TaskDialog(
                 onDismiss = { showDialog = false },
