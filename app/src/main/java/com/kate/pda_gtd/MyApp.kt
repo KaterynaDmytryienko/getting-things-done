@@ -30,7 +30,7 @@ class MyApp :Application(){
 
         val channel = NotificationChannel(
             NotificationService.NOTIFICATION_ID,
-            "Days before",
+            "GTD",
             NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
             description = "Notification channel for reminders"
