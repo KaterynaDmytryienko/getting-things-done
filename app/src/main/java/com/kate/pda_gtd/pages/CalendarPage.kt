@@ -1,5 +1,6 @@
 package com.kate.pda_gtd.pages
 import android.os.Build
+import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -16,7 +17,7 @@ import com.kate.pda_gtd.data.TaskViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CalendarPage {
+class CalendarPage : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable

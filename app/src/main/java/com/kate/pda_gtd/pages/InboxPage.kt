@@ -2,6 +2,7 @@ package com.kate.pda_gtd.pages
 
 import android.content.Context
 import android.os.Build
+import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,26 +21,31 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
 
-class InboxPage() {
+class InboxPage() : ComponentActivity(){
     @RequiresApi(Build.VERSION_CODES.O)
     @Composable
     fun InboxPageContent(state: TaskState, context: Context) {
         val formatter = DateTimeFormatter.ofPattern("d/M/yyyy")
         val today = LocalDate.now()
-
         val messagesInInbox = state.tasks
         if(messagesInInbox.isEmpty()){
             Text("No upcoming deadlines", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(100.dp, 100.dp))
         }
-        LazyColumn(Modifier.padding(top = 56.dp)) {
-            items(state.tasks) { task ->
-                    val taskDate = LocalDate.parse(task.dueDate, formatter)
-                    val daysBetween = ChronoUnit.DAYS.between(today, taskDate)
-                    ListItem(
-                        headlineContent = { Text(task.name) },
-                        trailingContent = { AssistChip(onClick = {}, label = { Text("$daysBetween days") }) }
-                    )
+        else{
+            LazyColumn(Modifier.padding(top = 56.dp)) {
+                items(state.tasks) { task ->
+                    if(task.dueDate.isNotEmpty()){
+                        val taskDate = LocalDate.parse(task.dueDate, formatter)
+                        val daysBetween = ChronoUnit.DAYS.between(today, taskDate)
+                        ListItem(
+                            headlineContent = { Text(task.name) },
+                            trailingContent = { AssistChip(onClick = {}, label = { Text("$daysBetween days") }) }
+                        )
+                    }
+
                 }
             }
+        }
+
         }
     }

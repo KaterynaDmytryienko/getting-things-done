@@ -1,5 +1,6 @@
 package com.kate.pda_gtd.pages
 
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -47,87 +48,107 @@ import com.kate.pda_gtd.data.TaskEvent
 import com.kate.pda_gtd.data.TaskState
 import com.kate.pda_gtd.data.TaskViewModel
 
-class TaskOverviewPage {
+class TaskOverviewPage : ComponentActivity(){
 
     @Composable
-    fun TasksPageContent(state: CategoryState, taskState: TaskState, selectedRoute: MutableState<String>) {
+    fun TasksPageContent(
+        state: CategoryState,
+        taskState: TaskState,
+        selectedRoute: MutableState<String>
+    ) {
         var showCategoryDialog by remember { mutableStateOf(false) }
         val categoryViewModel: CategoryViewModel = viewModel()
         val taskViewModel: TaskViewModel = viewModel()
         var selectedCategory by remember { mutableStateOf<Category?>(null) }
         val categories = state.categories
 
-        if(categories.isEmpty()){
-            Text("No categories here yet", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(100.dp, 100.dp))
-        }
-Column {
+        if (categories.isEmpty()) {
+            Text(
+                "No categories here yet",
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(100.dp, 100.dp)
+            )
+        } else {
+            Column {
 
-    LazyColumn(  modifier = Modifier
-        .padding(top = 56.dp)
-        .weight(1f).fillMaxWidth()) {
-        items(state.categories) { category ->
-            ElevatedCard(
-                elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
-                modifier = Modifier
-                    .height(80.dp)
-                    .fillMaxWidth()
-                    .padding(3.dp)
-                    .clickable {
-                        selectedCategory = category
-                        selectedRoute.value = "categorypage/${category.name}"
-                    }
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start,
+                LazyColumn(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
+                        .padding(top = 56.dp)
+                        .weight(1f)
+                        .fillMaxWidth()
                 ) {
-                    Icon(
-                        imageVector = Icons.Filled.FavoriteBorder,
-                        contentDescription = category.name,
-                        tint = Color(0xFF6200EE),
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
-                    Text(
-                        text = category.name,
-                        color = Color.Black,
-                        fontSize = 18.sp,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(Modifier.weight(1f))
-                    IconButton(
-                        onClick = {
-                            categoryViewModel.onEvent(CategoryEvent.DeleteCategoryById(category.id))
-                            taskViewModel.onEvent(TaskEvent.DeleteAllTasksFromCategory(category.name))
-                        },
-                        content = {
-                            Icon(
-                                imageVector = Icons.Outlined.Delete,
-                                contentDescription = "Delete ${category.name}",
-                                tint = Color.Black
-                            )
+                    items(state.categories) { category ->
+                        ElevatedCard(
+                            elevation = CardDefaults.cardElevation(defaultElevation = 20.dp),
+                            modifier = Modifier
+                                .height(80.dp)
+                                .fillMaxWidth()
+                                .padding(3.dp)
+                                .clickable {
+                                    selectedCategory = category
+                                    selectedRoute.value = "categorypage/${category.name}"
+                                }
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Filled.FavoriteBorder,
+                                    contentDescription = category.name,
+                                    tint = Color(0xFF6200EE),
+                                )
+                                Spacer(modifier = Modifier.width(16.dp))
+                                Text(
+                                    text = category.name,
+                                    color = Color.Black,
+                                    fontSize = 18.sp,
+                                    textAlign = TextAlign.Center
+                                )
+                                Spacer(Modifier.weight(1f))
+                                IconButton(
+                                    onClick = {
+                                        categoryViewModel.onEvent(
+                                            CategoryEvent.DeleteCategoryById(
+                                                category.id
+                                            )
+                                        )
+                                        taskViewModel.onEvent(
+                                            TaskEvent.DeleteAllTasksFromCategory(
+                                                category.name
+                                            )
+                                        )
+                                    },
+                                    content = {
+                                        Icon(
+                                            imageVector = Icons.Outlined.Delete,
+                                            contentDescription = "Delete ${category.name}",
+                                            tint = Color.Black
+                                        )
+                                    }
+                                )
+                            }
                         }
-                    )
+
+
+                    }
+
+
+                }
+                if (showCategoryDialog) {
+                    CategoryCreationDialog().CategoryDialog(onDismiss = {
+                        showCategoryDialog = false
+                    }, onEvent = { event -> categoryViewModel.onEvent(event) })
                 }
             }
-
-
-        }
-
-
-    }
-    if (showCategoryDialog) {
-        CategoryCreationDialog().CategoryDialog(onDismiss = { showCategoryDialog = false }, onEvent = { event -> categoryViewModel.onEvent(event) })
-    }
-}
-        Column(Modifier.padding(top = 650.dp, bottom = 30.dp, start = 300.dp)) {
-            FloatingActionButton(onClick = { showCategoryDialog = true }) {
-                Icon(Icons.Filled.Add, contentDescription = "Add Category")
+            Column(Modifier.padding(top = 650.dp, bottom = 30.dp, start = 300.dp)) {
+                FloatingActionButton(onClick = { showCategoryDialog = true }) {
+                    Icon(Icons.Filled.Add, contentDescription = "Add Category")
+                }
             }
         }
     }
-
-
 }
